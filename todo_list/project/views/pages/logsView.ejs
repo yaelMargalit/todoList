@@ -1,0 +1,84 @@
+<!doctype html>
+      <!-- to delete log: just in internal url- http://localhost:3000/admin/deleteLog/<log_name.txt> -->
+<html lang="en">
+  <% if(userId==1){%>
+    <%- include('../partials/adminHeader') %>
+  <%} else{%>
+    <%- include('../partials/header') %>
+  <%}%>
+  
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css" integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
+
+    
+  </head>
+  <style>
+  body{background-color: #3b3a3f; color:white !important}
+  .center {
+  margin-top: 40px;
+}
+.logo-image{
+    width: 150px;
+    height: auto;
+    /* border-radius: 50%; */
+    overflow: hidden;
+    margin-top: -6px;
+}
+.txtCenter{
+  text-align: center;
+}
+.table{
+  color: white !important;
+}
+a {
+    color: #891731 ;
+}
+a:hover{
+  color: #891731 !important;
+}
+
+.table td, .table th {
+    background-color: #5c5c60;
+}
+.table .thead-dark th {
+    background-color: #891731;
+    border-color: #891731;
+}
+  </style>
+  <body>
+    <div class="container center">
+      <h2 class="txtCenter">Logs Files</h2>
+    <table class="table ">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col">File Log Name</th>
+          <th scope="col">Size</th>
+          <th scope="col" class="txtCenter">Date Modified</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td><a href="http://localhost:3000/user/admin/downloadLog/registerLOG.txt">registerLOG</a></td>
+          <td><%= files.registerLOG_size%></td>
+          <td><%= files.registerLOG_date%></td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td><a href="http://localhost:3000/user/admin/downloadLog/loginLOG.txt">loginLOG</a></td>
+          <td><%= files.loginLOG_size%></td>
+          <td><%= files.loginLOG_date%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </body>
+</html>

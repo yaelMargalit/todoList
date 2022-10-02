@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css" integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
+
+    <!--Css link-->
+    <link rel="stylesheet" href="login.css">
+
+    <!-- sweet alert -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'> 
+
+  </head>
+
+  <style>
+    .swal2-icon.swal2-success {
+    border-color: #891731 !important;
+    color: #891731 !important;
+}
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: #891731;
+}
+.swal2-success-ring{
+  border-color: #891731 !important;
+}
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: #891731 !important;
+}
+.swal2-styled.swal2-confirm{
+  background-color: #891731 !important;
+}
+  </style>
+
+  <body>
+    
+    <div class ="row">
+      <div class="col-md-6 mx-auto p-0">
+        <div class="card">
+    <div class="login-box">
+      <div class="login-snip">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+        <div class="login-space">
+          <div class="login">
+            <div class="group">
+              <label for="user" class="label">Username</label>
+              <input id="user" type="text" class="input"  placeholder="Enter your username">
+            </div>
+            <div class="group">
+              <label for="pass" class="label">Password</label>
+              <input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password">
+            </div>
+            <div class="group">
+              <input id="check" type="checkbox" class="check" checked>
+              <label for="check"><span class="icon"></span> Keep me Signed in</label>
+            </div>
+            <div class="group">
+              <input type="submit" class="button" value="Sign In" onclick="signIn()">
+            </div>
+            <div class="hr">
+              <br>
+              <button id="restartData" onclick="restartData()">restart data</button>
+            </div>
+            <!-- <div class="foot">
+              <a href="#">Forgot Password?</a>
+            </div> -->
+          </div>
+          <div class="sign-up-form">
+            <div class="group">
+              <label for="user" class="label">Username</label>
+              <input id="registerUser" type="text" class="input" placeholder="Create your Username">
+            </div>
+            <div class="group">
+              <label for="pass" class="label">Password</label>
+              <input id="pass1" type="password" class="input" data-type="password" placeholder="Create your password">
+            </div>
+            <div class="group">
+              <label for="pass" class="label">Repeat Password</label>
+              <input id="pass2" type="password" class="input" data-type="password" placeholder="Repeat your password" >
+            </div>
+            <!-- <div class="group">
+              <label for="pass" class="label">Email Address</label>
+              <input id="email" type="text" class="input" placeholder="Enter your email address">
+            </div> -->
+            <div class="group">
+              <input type="submit" class="button" value="Sign Up" onclick="signUp()">
+            </div>
+            <div class="hr">
+              <br>
+              <button id="restartData" onclick="restartData()">restart data</button>
+            </div>
+            <div class="foot">
+              <label for="tab-1">Already Member?</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>   
+    </div>
+    </div>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.rtlcss.com/bootstrap/v4.5.3/js/bootstrap.bundle.min.js" integrity="sha384-40ix5a3dj6/qaC7tfz0Yr+p9fqWLzzAXiwxVLt9dw7UjQzGYw6rWRhFAnRapuQyK" crossorigin="anonymous"></script>
+
+
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+
+    <!-- <script src="login.js"></script> -->
+
+    <script>
+
+// const { default: Swal } = require("sweetalert2");
+
+//register
+async function signUp(){
+    console.log(document.getElementById("registerUser").value, "ff", document.getElementById("pass2").value);
+    const response = await fetch("http://localhost:3000/user/register", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({ 
+           userName: document.getElementById("registerUser").value,
+           userPassword: document.getElementById("pass1").value,
+           pass2: document.getElementById("pass2").value
+          })
+        });
+    
+        response.text().then(data => {
+          console.log(typeof(data),"llllllllllllllllllllll");
+          if(data=="the user name is already exists" || data== "the user password is already exists" || data=="the user exists" || data=="the repeat password does'nt match the password" || data.startsWith("error"))
+            Swal.fire(data);
+          else{
+            data=JSON.parse(data)
+            sessionStorage.setItem("userId", data["id"]);
+            sessionStorage.setItem("userName", document.getElementById("registerUser").value);            
+           window.location.href =`/user/getAllTasks/${sessionStorage.getItem("userId")}`
+          }
+        });
+}
+
+//login
+async function signIn(){
+    const response = await fetch("http://localhost:3000/user/login", {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({ 
+       userName: document.getElementById("user").value,
+       userPassword: document.getElementById("pass").value
+      })
+    });
+
+    response.text().then(data => {
+      console.log(data);
+          if(data=="the password is not correct" || data=="the user name is not correct" || data=="the user is not exists, please register" || data=="sql injection" || data.startsWith("error"))
+            Swal.fire(data);
+          else{
+            console.log(typeof(data)+"ppppppppppp")
+            data=JSON.parse(data)
+            sessionStorage.setItem("userId", data["id"]);
+            sessionStorage.setItem("userName", data["userName"]);
+            window.location.href =`/user/getAllTasks/${sessionStorage.getItem("userId")}`
+          }
+    });
+}
+
+
+
+async function restartData(){
+  const response=await fetch('http://localhost:3000/user/restart_data')
+  response.text().then(data=>{
+    Swal.fire("restart data",data, "success");
+  })
+}
+    </script>
+
+
+  </body>
+</html>
+

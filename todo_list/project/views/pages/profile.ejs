@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <% if(userId==1){%>
+    <%- include('../partials/adminHeader') %>
+  <%} else{%>
+    <%- include('../partials/header') %>
+  <%}%>
+  
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css" integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
+
+    <!-- sweet alert -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>    <!--Css link-->
+    <!-- <link href="todoList.css" rel="stylesheet" type="text/css"> -->
+
+  </head>
+  <style>
+    body{
+        background-color: #3b3a3f !important;
+        text-align: left;
+    }
+    
+    .logo-image{
+    width: 150px;
+    height: auto;
+    /* border-radius: 50%; */
+    overflow: hidden;
+    margin-top: -6px;
+}
+    section{
+        background-color: #3b3a3f !important;
+    }
+    .gradient-custom {
+/* fallback for old browsers */
+background: #891731;
+
+}
+#updateBTN{
+    background: #891731;
+    color: white;
+    border-color: #891731;
+}
+  </style>
+  <body>
+    <section id="<% message%>" class="vh-100 " style="background-color: #f4f5f7;">
+        <div class="container py-5 h-100" style="width: 100%; height:100px;">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+              <div class="card mb-3" style="border-radius: .5rem;">
+                <div class="row g-0">
+                  <div class="col-md-4 gradient-custom text-center text-white"
+                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                    <img src="<%= user.imgProfile%>"
+                      alt="Avatar" class="img-fluid my-5" style="width: 80px; border:1px solid white;" />
+                    <h5><%= user.userName%></h5>
+                    <p><Web Designer></p>
+                    <i class="far fa-edit mb-5"></i>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body p-4">
+
+                      <h6>update image profile</h6>
+                      <hr class="mt-0 mb-4">
+
+                      <form action="http://localhost:3000/user/updateProfile/<%= user.id%>" method="post">
+                        <label class="text-muted" for="homepage">Enter url for image:</label>
+                        <input type="url" id="url" name="url"><br><br>
+                        <input type="submit" value="update" class="btn" id="updateBTN">
+                      </form>
+
+                      </div>            
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script>
+        // window.onbeforeprint = function() {
+        // if(document.getElementsByTagName("section")[0].id!=" ")
+        //   Swal.fire(message);
+        // }
+      </script>
+
+
+  </body>
+</html>
+
