@@ -118,13 +118,14 @@
     $(function() {
       var todoListItem = $('.todo-list');
       var todoListInput = $('.todo-list-input');
+      var currentUserId=window.location.href.split("/").pop();
       $('.todo-list-add-btn').on("click",async function(event) {
         event.preventDefault();
   
         var item = $(this).prevAll('.todo-list-input').val();
   
         if (item) {
-          await fetch(`http://localhost:3000/task/addTask/${item}`)
+          await fetch(`http://localhost:3000/task/addTask/${item}/${currentUserId}`)
           .then(res=>{
             console.log(res.text());
             todoListItem.append("<li><div class='form-check'><label class='form-check-label'><input class='checkbox' type='checkbox'/>" + item + "<i class='input-helper'></i></label></div><i class='remove mdi mdi-close-circle-outline'></i></li>");
@@ -189,7 +190,7 @@
   // async function saveChanges(){
     var tasksLst=document.getElementById("uli").getElementsByTagName("li");
     var currentTasks=[];
-    var userId=document.getElementsByTagName("body")[0].id;
+    var userId=window.location.href.split("/").pop();
     console.log(userId)
         Array.from(tasksLst).forEach(task=>{
           if(task.classList.contains("completed"))

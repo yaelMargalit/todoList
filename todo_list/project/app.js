@@ -32,6 +32,8 @@ const corsOptions ={
    optionSuccessStatus:200,
 }
 
+global.store={};
+
 app.use(cors(corsOptions))
 
 app.use(function(req,res,next){
@@ -62,9 +64,9 @@ try{
          users.getByName("admin").then((response)=>{
             if(!response)
             {
-                users.create("admin","admin1234", "https://images.globes.co.il/images/NewGlobes/big_image_800/2018/1E63520A7E6D262804A3B64A3DD2CEC7_800x392.20180404T105103.jpg", true);
-                users.create("Roni", "qwe123", "https://files.geektime.co.il/wp-content/uploads/2015/10/shutterstock_253413775.jpg", true)
-                users.create("Shani", "sh9090",defaultImgProfile , true)
+                users.create("admin","admin1234", "https://images.globes.co.il/images/NewGlobes/big_image_800/2018/1E63520A7E6D262804A3B64A3DD2CEC7_800x392.20180404T105103.jpg", true)
+                .then(()=>users.create("Roni", "qwe123", "https://files.geektime.co.il/wp-content/uploads/2015/10/shutterstock_253413775.jpg", true))
+                .then(()=>users.create("Shani", "sh9090",defaultImgProfile , true))
             }
         })
     })
@@ -78,10 +80,13 @@ try{
             if(!response)
             {
                 tasks.create("Status meeting", "todo", 1, true);
-                tasks.create("write a blog", "complete", 1, true);
+                tasks.create("Check security issues", "todo", 1, true);
+                tasks.create("Fix SQL Injection", "complete", 1, true);
+
                 tasks.create("finish calculate tasks", "completed", 2, true);
                 tasks.create("check about programing ", "todo", 2, true);
                 tasks.create("Determine zoom meeting", "completed", 2, true);
+                
                 tasks.create("upload to git", "todo", 3, true);
             }
         })

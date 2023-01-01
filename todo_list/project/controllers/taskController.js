@@ -28,7 +28,7 @@ exports.addTask=function(req,res){
     //connect to SQLite
     const dao = new AppDAO('./database.sqlite3')
     const tasks=new task(dao);
-    tasks.create(req.params.taskName,"todo",req.session.userId, false)
+    tasks.create(req.params.taskName,"todo",req.params.currentUserId, false)
     .then((result)=>{
         console.log("OOOOO"+result)
         res.send("create task");
@@ -38,7 +38,11 @@ exports.addTask=function(req,res){
 exports.updateTaskStatus=function(req,res){
     //csrf:
     //if user is register- can update todo list:
-    if(req.session.id){
+    
+     console.log("body:"+req.body.tasksLst[0].task)
+     console.log("id?: "+ Object.values(global.store).find(val=>val==req.body.tasksLst[0].task.userId)+ " userid:"+req.body.tasksLst[0].task.userId)
+
+    if(Object.values(global.store).find(val=>val==req.body.tasksLst[0].task.userId)){
         const dao = new AppDAO('./database.sqlite3')
         const tasks=new task(dao);
         for(var i=0;i<req.body.tasksLst.length-1;i++){

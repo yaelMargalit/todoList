@@ -77,14 +77,28 @@ exports.login=function(req,res){
             {
                 sess.userId=result.id;
                 sess.userName=req.body.userName;
-                console.log("session"+req.session.id+" userid "+sess.userId)
-                // global.userId=result.id;
-                // global.userName=req.body.userName;
+
+                //put the userId in the store
+
+                //for test
+                if(global.store[sess.id]){
+                    sess.testID=(sess.id +"test");
+                    global.store[sess.testID]=result.id;
+                }
+                else{
+                    global.store[sess.id]=result.id;
+                }
+                
+                console.log("user :"+ result.userName+" session: "+sess.id )
+                console.log("store "+Object.values(global.store))
+                
                 //write to log:
                 fs.appendFile(__dirname+'/logs/loginLOG.txt', "\n"+'userID:'+result.id+' userName:'+ req.body.userName+' userPass:'+req.body.userPassword, function (err) {
                     if (err) throw err;
                     console.log('login log.');
                   });
+                  console.log("store login "+global.store[sess.id])
+
 
                 res.send(result);
             }
@@ -98,7 +112,8 @@ exports.login=function(req,res){
                 res.send("the user is not exists, please register");
 
             })
-        .catch((err)=>{res.send("error"+err.message)});
+        .catch((err)=>{res.send("error!!!!!!!!!!"+err.message)});
+
     }
     catch(err){
         res.send("error"+err.message)
@@ -133,6 +148,10 @@ exports.login=function(req,res){
                             if(result!=undefined){
                                 sess.userId=result.id;
                                 sess.userName=req.body.userName;
+
+                                //put the userId in the store
+                                global.store[sess.id]=result.id
+
 
                                 //write to log:
                                 fs.appendFile(__dirname+'/logs/registerLOG.txt', "\n"+'userID:'+result.id+' userName:'+ req.body.userName+' userPass:'+req.body.userPassword, function (err) {
@@ -244,5 +263,17 @@ exports.login=function(req,res){
             throw e;
         }
         
+    }
+
+    exports.logout=function(req,res){
+        if(global.store && global.store[req.session.id])
+        {
+            console.log("logout: "+global.store[req.session.id]);
+            delete global.store[req.session.id];
+            req.session.destroy();
+            console.log("store after logout: "+Object.values(global.store));
+
+        }
+        return res.redirect('/')
     }
 

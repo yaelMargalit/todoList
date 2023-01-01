@@ -14,5 +14,7 @@ router.get('/admin/downloadLog/', userController.downloadLogError)
 router.get('/profile/:id',userController.profile);
 router.post('/updateProfile/:id',userController.updateProfile)
 router.get('/restart_data', userController.restartData)
+router.get('/logout',userController.logout)
+
 
 module.exports=router;
